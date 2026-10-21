@@ -6,6 +6,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
+from translate import enrich_candidate
 
 ROOT = Path(__file__).resolve().parents[1]
 KEYWORDS = re.compile(r"plakoro|プラコロ|ポケモン.*(ボックス|セット)", re.I)
@@ -40,7 +41,7 @@ def main():
         try:
             for candidate in parse(fetch(url), url):
                 if candidate["url"] not in seen:
-                    candidates.append(candidate)
+                    candidates.append(enrich_candidate(candidate))
                     seen.add(candidate["url"])
         except Exception as exc:
             errors.append({"feed": url, "error": str(exc)})
