@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 from translate import enrich_candidate
+from sitemap import discover, fetch_sitemap
 
 ROOT = Path(__file__).resolve().parents[1]
 KEYWORDS = re.compile(r"plakoro|プラコロ|ポケモン.*(ボックス|セット)", re.I)
@@ -45,8 +46,20 @@ def main():
                     seen.add(candidate["url"])
         except Exception as exc:
             errors.append({"feed": url, "error": str(exc)})
+    for source in config.get("sitemaps", []):
+        if not source.get("enabled", True):
+            continue
+        url = source.get("url", "")
+        try:
+            for candidate in discover(fetch_sitemap(url), url):
+                if candidate["url"] not in seen:
+                    candidates.append(enrich_candidate(candidate))
+                    seen.add(candidate["url"])
+        except Exception as exc:
+            errors.append({"sitemap": url, "error": str(exc)})
     report = {"checked_at": datetime.now(timezone.utc).isoformat(),
               "configured_feeds": len(config.get("feeds", [])),
+              "configured_sitemaps": len(config.get("sitemaps", [])),
               "candidates": candidates, "errors": errors}
     (ROOT / "candidates.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Candidates: {len(candidates)}, errors: {len(errors)}")
