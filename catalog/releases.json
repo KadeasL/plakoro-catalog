@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "catalog_version": "0.1.0",
-  "updated_at": null,
+  "schema": "plakoro-calendar-v1",
+  "catalog_version": "0.1.1",
+  "updated_at": "2026-10-21",
   "releases": []
 }
