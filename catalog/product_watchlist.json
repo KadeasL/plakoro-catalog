@@ -1,0 +1,4 @@
+{
+  "products": [],
+  "instructions": "Add only verified Japanese retailer product URLs, exact name_marker and a product-specific stock_pattern with named group (?P<status>...). No listing pages or unverified links. Observations never trigger emails."
+}
