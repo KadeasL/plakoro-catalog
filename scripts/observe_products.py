@@ -80,6 +80,8 @@ def main():
     items = data.get("products", [])
     if not isinstance(items, list):
         raise ValueError("products must be a list")
+    if not items:
+        raise RuntimeError("Watchlist is empty: refusing a misleading successful monitoring run")
     observations = [inspect(item) for item in items]
     for item, observation in zip(items, observations):
         observation["official_url"] = item.get("official_url")
