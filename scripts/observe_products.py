@@ -56,6 +56,12 @@ def main():
     if not isinstance(items, list):
         raise ValueError("products must be a list")
     observations = [inspect(item) for item in items]
+    for item, observation in zip(items, observations):
+        observation["official_url"] = item.get("official_url")
+        observation["official_release_date"] = item.get("release_date") if item.get("release_date_precision") == "day" else None
+        observation["official_price_jpy"] = item.get("official_price_jpy")
+        observation["retailer_url"] = item.get("product_url")
+        observation["verified_for_email"] = False
     REPORT.write_text(json.dumps({"checked_at": datetime.now(timezone.utc).isoformat(),
        "observations": observations,
        "note": "Candidates require independent verification; this report never sends mail."},
