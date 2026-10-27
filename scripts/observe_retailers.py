@@ -42,6 +42,10 @@ def main():
                               "observations": observations, "errors": errors,
                               "warning": "Listing text is not proof of sale. Product-page verification required."},
                              ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    print("Checked sources:", len(observations), "errors:", len(errors))\n    for error in errors:\n        print("SOURCE ERROR:", error["source"], error["error"])\n    if not observations:\n        raise SystemExit("No retailer sources accessible; observations incomplete")
+    print("Checked sources:", len(observations), "errors:", len(errors))
+    for error in errors:
+        print("SOURCE ERROR:", error["source"], error["error"])
+    if not observations:
+        raise SystemExit("No retailer sources accessible; observations incomplete")
 if __name__ == "__main__":
     main()
