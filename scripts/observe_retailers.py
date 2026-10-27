@@ -10,9 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "catalog" / "retailer_observations.json"
 SOURCES = [
-    ("hobbysearch", "https://www.1999.co.jp/mlist/765/5/1/"),
+    ("hobbysearch", "https://www.1999.co.jp/mlist/765/7/1"),
     ("yodobashi", "https://www.yodobashi.com/category/141001/141336/141538/141539/m5000002032/"),
-    ("joshin", "https://joshinweb.jp/game/48711/"),
+    ("pokemon_center", "https://www.pokemoncenter-online.com/4580886846931.html"),
 ]
 KEYWORD = re.compile("プラコロ", re.I)
 PRODUCT = re.compile("スタートセット|たんけんボックス|進化セット|テラスタル|DX")
@@ -42,6 +42,6 @@ def main():
                               "observations": observations, "errors": errors,
                               "warning": "Listing text is not proof of sale. Product-page verification required."},
                              ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    print("Checked sources:", len(observations), "errors:", len(errors))
+    print("Checked sources:", len(observations), "errors:", len(errors))\n    for error in errors:\n        print("SOURCE ERROR:", error["source"], error["error"])\n    if not observations:\n        raise SystemExit("No retailer sources accessible; observations incomplete")
 if __name__ == "__main__":
     main()
