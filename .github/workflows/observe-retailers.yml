@@ -21,6 +21,10 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_product_status.py' -v
       - name: Test conservative Japanese stock signals
         run: python -m unittest discover -s tests -p 'test_sale_status.py' -v
+      - name: Test product-page observation safeguards
+        run: python -m unittest discover -s tests -p 'test_observe_products.py' -v
+      - name: Observe verified product pages
+        run: python -m scripts.observe_products
       - name: Check Japanese retailer listings
         run: python scripts/observe_retailers.py
       - name: Upload observations for verification
@@ -28,5 +32,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: retailer-observations
-          path: catalog/retailer_observations.json
+          path: |\n            catalog/retailer_observations.json\n            catalog/product_observations.json
           retention-days: 14
