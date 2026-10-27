@@ -1,6 +1,14 @@
 name: Observe Japanese Plakoro retailers
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'catalog/product_watchlist.json'
+      - 'scripts/observe_products.py'
+      - 'scripts/product_status.py'
+      - 'tests/test_observe_products.py'
+      - '.github/workflows/observe-retailers.yml'
   schedule:
     - cron: '11 */6 * * *'
   workflow_dispatch:
