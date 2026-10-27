@@ -20,6 +20,7 @@ jobs:
       - name: Check Japanese retailer listings
         run: python scripts/observe_retailers.py
       - name: Upload observations for verification
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: retailer-observations
