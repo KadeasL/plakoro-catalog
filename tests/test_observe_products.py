@@ -1,5 +1,5 @@
 import unittest
-from scripts.observe_products import inspect
+from scripts.observe_products import inspect, inspect_official
 
 ITEM = {"id": "test", "name_ja": "プラコロ スタートセット カイリュー",
         "release_date": "2026-10-20", "product_url": "https://example.jp/product/1",
@@ -17,6 +17,19 @@ class ProductObservationTests(unittest.TestCase):
     def test_future_release_is_not_sale(self):
         item = dict(ITEM, release_date="2099-11-20")
         self.assertEqual(inspect(item, lambda url: 'カイリュー<div id="stock">在庫あり</div>')["status"], "not_available")
+
+class OfficialPageTests(unittest.TestCase):
+    def test_matching_official_page_is_not_stock_confirmation(self):
+        item = dict(ITEM, official_url="https://bandai-hobby.net/item/01_7184/")
+        result = inspect_official(item, lambda url: "<h1>プラコロ スタートセット カイリュー 11</h1>")
+        self.assertEqual(result["status"], "identity_matched")
+        self.assertNotIn("candidate_in_stock", str(result))
+    def test_untrusted_official_domain_is_rejected(self):
+        item = dict(ITEM, official_url="https://example.jp/item/01_7184/")
+        self.assertEqual(inspect_official(item, lambda url: "カイリュー")["status"], "unknown")
+    def test_missing_identity_fails_closed(self):
+        item = dict(ITEM, official_url="https://bandai-hobby.net/item/01_7184/")
+        self.assertEqual(inspect_official(item, lambda url: "another product")["status"], "unknown")
 
 if __name__ == "__main__":
     unittest.main()
