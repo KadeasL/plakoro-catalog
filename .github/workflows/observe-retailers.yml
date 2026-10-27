@@ -1,0 +1,27 @@
+name: Observe Japanese Plakoro retailers
+
+on:
+  schedule:
+    - cron: '11 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check Japanese retailer listings
+        run: python scripts/observe_retailers.py
+      - name: Upload observations for verification
+        uses: actions/upload-artifact@v4
+        with:
+          name: retailer-observations
+          path: catalog/retailer_observations.json
+          retention-days: 14
