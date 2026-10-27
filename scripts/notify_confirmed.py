@@ -31,6 +31,17 @@ def main():
     if not (sender and password and recipient):
         print("Mail credentials/recipient not configured; no email sent.")
         return
+    if os.environ.get("PLAKORO_TEST_EMAIL") == "true":
+        msg = EmailMessage()
+        msg["From"] = sender
+        msg["To"] = recipient
+        msg["Subject"] = "ТЕСТ GitHub Actions — Plakoro"
+        msg.set_content("Проверка цепочки GitHub Actions → Gmail → Mail.ru прошла: письмо отправлено из GitHub. Это не уведомление о продаже.")
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ssl.create_default_context(), timeout=30) as smtp:
+            smtp.login(sender, password)
+            smtp.send_message(msg)
+        print("GitHub Actions test email sent.")
+        return
     records = read(INPUT, {"releases": []})["releases"]
     sent = set(read(STATE, {"sent_ids": []})["sent_ids"])
     changed = False
