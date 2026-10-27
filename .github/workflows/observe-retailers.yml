@@ -19,6 +19,8 @@ jobs:
           python-version: '3.12'
       - name: Test product stock classification
         run: python -m unittest discover -s tests -p 'test_product_status.py' -v
+      - name: Test conservative Japanese stock signals
+        run: python -m unittest discover -s tests -p 'test_sale_status.py' -v
       - name: Check Japanese retailer listings
         run: python scripts/observe_retailers.py
       - name: Upload observations for verification
