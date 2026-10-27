@@ -31,11 +31,16 @@
       "name_marker": "たんけんボックス 02",
       "product_url": "https://www.yodobashi.com/product/100000001009757819/",
       "price_jpy": 4620,
-      "release_date": "2026-11-30",
-      "release_date_precision": "month",
+      "release_date": "2026-11-07",
+      "release_date_precision": "day",
       "status": "watch_only",
-      "notes": "Retailer lists November 2026, exact date unconfirmed here. Stock selector not configured; do not auto-promote or notify."
+      "notes": "Official Bandai Hobby product page confirmed by user screenshots: release 2026-11-07, 385 JPY tax included per item. Retailer listing is 12 items at 4620 JPY. Product-specific stock selector not configured; do not send sale notification.",
+      "official_url": "https://bandai-hobby.net/item/01_7182/",
+      "official_price_jpy": 385,
+      "official_price_unit": "one item",
+      "retailer_listing_price_jpy": 4620,
+      "retailer_listing_quantity": 12
     }
   ],
-  "instructions": "Product URLs are verified. The November 30 date is an end-of-month placeholder, not a confirmed release date. No stock_pattern: inspection deliberately returns unknown until product-specific selectors and dates are verified. No automatic emails."
+  "instructions": "Use official Bandai release dates separately from retailer stock. No stock_pattern: observations deliberately remain unknown; no automatic emails."
 }
