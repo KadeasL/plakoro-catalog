@@ -43,9 +43,12 @@ def main():
                               "warning": "Listing text is not proof of sale. Product-page verification required."},
                              ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     print("Checked sources:", len(observations), "errors:", len(errors))
+    print("Plakoro product mentions:", sum(len(o["mentions"]) for o in observations))
     for error in errors:
         print("SOURCE ERROR:", error["source"], error["error"])
     if not observations:
         raise SystemExit("No retailer sources accessible; observations incomplete")
+    if not any(o["mentions"] for o in observations):
+        raise SystemExit("No Plakoro product mentions found; monitoring has no usable product data")
 if __name__ == "__main__":
     main()
