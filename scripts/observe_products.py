@@ -50,6 +50,31 @@ def inspect(item, fetch=None):
     except Exception as exc:
         return {"id": item["id"], "status": "unknown", "reason": "fetch error: " + str(exc)[:160]}
 
+def inspect_official(item, fetch=None):
+    """Check the official Bandai page identity; never infer retailer availability."""
+    url = item.get("official_url")
+    if not url:
+        return {"status": "unknown", "reason": "official URL missing"}
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or parsed.hostname != "bandai-hobby.net":
+        return {"status": "unknown", "reason": "untrusted official URL"}
+    if fetch is None:
+        def fetch(target):
+            request = urllib.request.Request(target, headers={"User-Agent": "Mozilla/5.0 PlakoroCatalogResearch/0.4"})
+            with urllib.request.urlopen(request, timeout=12) as response:
+                final = urlparse(response.geturl())
+                if final.scheme != "https" or final.hostname != parsed.hostname:
+                    raise ValueError("official page redirected outside domain")
+                return response.read(MAX_BYTES).decode("utf-8", "replace")
+    try:
+        raw = unescape(fetch(url))
+        marker = item.get("name_marker", "")
+        if not marker or marker not in raw:
+            return {"status": "unknown", "reason": "official product identity not matched"}
+        return {"status": "identity_matched", "reason": "official product page identified; not proof of stock"}
+    except Exception as exc:
+        return {"status": "unknown", "reason": "official fetch error: " + str(exc)[:160]}
+
 def main():
     data = json.loads(WATCHLIST.read_text(encoding="utf-8"))
     items = data.get("products", [])
@@ -61,6 +86,7 @@ def main():
         observation["official_release_date"] = item.get("release_date") if item.get("release_date_precision") == "day" else None
         observation["official_price_jpy"] = item.get("official_price_jpy")
         observation["retailer_url"] = item.get("product_url")
+        observation["official_page_check"] = inspect_official(item)
         observation["verified_for_email"] = False
     REPORT.write_text(json.dumps({"checked_at": datetime.now(timezone.utc).isoformat(),
        "observations": observations,
