@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '37 */6 * * *'
   workflow_dispatch:
+    inputs:
+      send_test_email:
+        description: 'Send one test email (not a sale alert)'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -28,6 +34,7 @@ jobs:
           GMAIL_SENDER: ${{ secrets.PLAKORO_GMAIL_SENDER }}
           GMAIL_APP_PASSWORD: ${{ secrets.PLAKORO_GMAIL_APP_PASSWORD }}
           PLAKORO_RECIPIENT: ${{ secrets.PLAKORO_RECIPIENT }}
+          PLAKORO_TEST_EMAIL: ${{ inputs.send_test_email }}
         run: python scripts/notify_confirmed.py
       - name: Record delivered notifications
         run: |
