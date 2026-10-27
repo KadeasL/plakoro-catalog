@@ -1,4 +1,41 @@
 {
-  "products": [],
-  "instructions": "Add only verified Japanese retailer product URLs, exact name_marker and a product-specific stock_pattern with named group (?P<status>...). No listing pages or unverified links. Observations never trigger emails."
+  "products": [
+    {
+      "id": "start-altaria-10",
+      "name_ja": "プラコロ スタートセット チルタリス 10",
+      "name_ru": "Стартовый набор Алтария 10",
+      "name_marker": "チルタリス 10",
+      "product_url": "https://www.yodobashi.com/product/100000001009757817/",
+      "price_jpy": 990,
+      "release_date": "2026-11-30",
+      "release_date_precision": "month",
+      "status": "watch_only",
+      "notes": "Retailer lists November 2026, exact date unconfirmed here. Stock selector not configured; do not auto-promote or notify."
+    },
+    {
+      "id": "start-dragonite-11",
+      "name_ja": "プラコロ スタートセット カイリュー 11",
+      "name_ru": "Стартовый набор Драгонайт 11",
+      "name_marker": "カイリュー 11",
+      "product_url": "https://www.yodobashi.com/product/100000001009757818/",
+      "price_jpy": 990,
+      "release_date": "2026-11-30",
+      "release_date_precision": "month",
+      "status": "watch_only",
+      "notes": "Retailer lists November 2026, exact date unconfirmed here. Stock selector not configured; do not auto-promote or notify."
+    },
+    {
+      "id": "adventure-box-02",
+      "name_ja": "プラコロ たんけんボックス 02",
+      "name_ru": "Adventure Box 02",
+      "name_marker": "たんけんボックス 02",
+      "product_url": "https://www.yodobashi.com/product/100000001009757819/",
+      "price_jpy": 4620,
+      "release_date": "2026-11-30",
+      "release_date_precision": "month",
+      "status": "watch_only",
+      "notes": "Retailer lists November 2026, exact date unconfirmed here. Stock selector not configured; do not auto-promote or notify."
+    }
+  ],
+  "instructions": "Product URLs are verified. The November 30 date is an end-of-month placeholder, not a confirmed release date. No stock_pattern: inspection deliberately returns unknown until product-specific selectors and dates are verified. No automatic emails."
 }
