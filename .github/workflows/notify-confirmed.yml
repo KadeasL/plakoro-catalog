@@ -1,0 +1,40 @@
+name: Notify confirmed Plakoro sales
+
+on:
+  schedule:
+    - cron: '37 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: plakoro-confirmed-sales
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Send only confirmed sales
+        env:
+          GMAIL_SENDER: ${{ secrets.PLAKORO_GMAIL_SENDER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.PLAKORO_GMAIL_APP_PASSWORD }}
+          PLAKORO_RECIPIENT: ${{ secrets.PLAKORO_RECIPIENT }}
+        run: python scripts/notify_confirmed.py
+      - name: Record delivered notifications
+        run: |
+          if ! git diff --quiet -- catalog/notified_sales.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add catalog/notified_sales.json
+            git commit -m "Record delivered Plakoro sale notifications"
+            git push
+          fi
