@@ -10,9 +10,10 @@
       "release_date": "2026-11-21",
       "release_date_precision": "day",
       "status": "watch_only",
-      "notes": "Official Bandai Hobby screenshots supplied by user confirm 2026-11-21 release and 990 JPY tax included. Official item URL not yet identified. No verified stock selector; no automatic sale email.",
+      "notes": "Official Bandai Hobby screenshots supplied by user confirm 2026-11-21 release and 990 JPY tax included. Official item URL supplied by user; remote fetch currently returns 404 in this environment. No verified stock selector; no automatic sale email.",
       "official_price_jpy": 990,
-      "official_price_unit": "one starter set"
+      "official_price_unit": "one starter set",
+      "official_url": "https://bandai-hobby.net/item/01_7183/"
     },
     {
       "id": "start-dragonite-11",
@@ -24,9 +25,10 @@
       "release_date": "2026-11-21",
       "release_date_precision": "day",
       "status": "watch_only",
-      "notes": "Official Bandai Hobby screenshots supplied by user confirm 2026-11-21 release and 990 JPY tax included. Official item URL not yet identified. No verified stock selector; no automatic sale email.",
+      "notes": "Official Bandai Hobby screenshots supplied by user confirm 2026-11-21 release and 990 JPY tax included. Official item URL supplied by user; remote fetch currently returns 404 in this environment. No verified stock selector; no automatic sale email.",
       "official_price_jpy": 990,
-      "official_price_unit": "one starter set"
+      "official_price_unit": "one starter set",
+      "official_url": "https://bandai-hobby.net/item/01_7184/"
     },
     {
       "id": "adventure-box-02",
